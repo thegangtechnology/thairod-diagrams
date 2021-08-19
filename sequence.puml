@@ -1,0 +1,76 @@
+@startuml
+autonumber
+skinparam sequence {
+  GroupBodyBackgroundColor Transparent
+}
+skinparam sequenceMessageAlign center
+actor Patient as patient
+participant LineOA as line
+box "Frappet" #44c9c1
+participant Registration as regis
+participant "Telemed System" as telemed
+end box
+
+box "The Gang" #3d91ff
+participant "Thariod\nMall" as mall
+end box
+actor "Volunteer\nDoctor" as doctor
+box "Reinfinitiv" #f7abff
+participant "Volunteer\nRegistration\nSystem" as vregis
+end box
+actor "Thairod\nLogistics\nStaff" as logistic
+participant Shippop as shippop
+
+==Big Picture==
+patient -> line: Fill form on Line OA
+line -> regis: Send registration info
+regis-> regis: Triage
+regis -> patient: Registration Confirmation
+note right
+Correct this part for me
+end note
+regis -> telemed: Admit patient
+telemed -> mall: Request Box\nAlong with other info.
+mall -> mall: Create order flow
+mall -> patient: Request for Address Confirmation via line.
+patient -> mall: Confirm Address
+mall -> mall: Check Stock and Duplication
+mall -> shippop: Create and Confirm Shipment
+shippop -> mall: Tracking Code
+mall -> patient: Tracking Code and Order Number
+
+==Volunteer Registration Flow==
+doctor -> vregis: Volunteer Register
+vregis -> telemed: Doctor Registration
+telemed -> doctor: Some Registration Info??
+==Doctor Follow Up Flow==
+telemed -> doctor: Appointment
+telemed -> patient: Appointment
+doctor -> telemed: Follow Up
+patient -> telemed: Come to the Appointment
+group "Doctor Wants to Order Some Med" trans
+    doctor ->  telemed: Med Ordering Request
+    telemed -> mall: Shopping Link Request
+    mall -> telemed: Secret Shopping Link
+    telemed -> doctor: Present Shopping Link
+    doctor -> mall: Use Secret Shopping Link
+    doctor -> doctor: Add med to cart.
+    doctor -> mall: Confirm Order
+    mall -> patient: Line message for Order Confirmation
+    patient -> mall: Confirm Order
+    mall -> mall: Check Stock and Duplication
+    mall -> shippop: Create and Confirm Shipment
+    shippop -> mall: Tracking Code
+    mall -> patient: Tracking Code via Line
+end
+==Logistics Team==
+logistic -> mall: Shipping Label Print Request
+mall -> shippop: Label Request for tracking Code
+shippop -> mall: Shipping Label
+mall -> mall: Add Order Summary Sheet
+mall -> logistic: Shipping Labels with Order Summary Sheet
+shippop -> logistic: Shippop arrive to pick up package
+logistic -> shippop: Hand over the package
+shippop -> patient: Deliver the package
+@enduml
+
