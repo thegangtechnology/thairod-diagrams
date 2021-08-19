@@ -1,4 +1,7 @@
 @startuml
+header
+Thairod Sequences %date("yyyy.MM.dd' at 'HH:mm")
+end header
 autonumber
 skinparam sequence {
   GroupBodyBackgroundColor Transparent
@@ -48,7 +51,7 @@ telemed -> doctor: Appointment
 telemed -> patient: Appointment
 doctor -> telemed: Follow Up
 patient -> telemed: Come to the Appointment
-group "Doctor Wants to Order Some Med" trans
+group "Doctor Wants to Order Some Med"
     doctor ->  telemed: Med Ordering Request
     telemed -> mall: Shopping Link Request
     mall -> telemed: Secret Shopping Link
